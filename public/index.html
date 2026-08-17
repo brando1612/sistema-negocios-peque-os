@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión Negocios</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="login" class="auth">
+  <div class="auth-card">
+    <h1>Gestión Negocios</h1>
+    <p>Sistema para pequeños negocios</p>
+    <form id="loginForm">
+      <input id="email" type="email" placeholder="Correo" required>
+      <input id="password" type="password" placeholder="Contraseña" required>
+      <button>Ingresar</button>
+    </form>
+    <button class="secondary" id="showRegister">Crear cuenta</button>
+    <small>Demo: registra una cuenta nueva para comenzar.</small>
+  </div>
+</div>
+
+<div id="register" class="auth hidden">
+  <div class="auth-card">
+    <h1>Crear cuenta</h1>
+    <form id="registerForm">
+      <input id="rname" placeholder="Nombre completo" required>
+      <input id="remail" type="email" placeholder="Correo" required>
+      <input id="rpassword" type="password" minlength="6" placeholder="Contraseña (mín. 6)" required>
+      <button>Registrarme</button>
+    </form>
+    <button class="secondary" id="showLogin">Volver</button>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+  <aside>
+    <h2>Mi Negocio</h2>
+    <button data-section="dashboard">📊 Dashboard</button>
+    <button data-section="products">📦 Productos</button>
+    <button data-section="clients">👥 Clientes</button>
+    <button data-section="sales">💰 Ventas</button>
+    <button data-section="reports">📈 Reportes</button>
+    <button data-section="users">👤 Usuarios</button>
+    <button id="logout" class="logout">Cerrar sesión</button>
+  </aside>
+  <main>
+    <header><div><b id="welcome"></b><span> Panel administrativo</span></div></header>
+    <section id="content"></section>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

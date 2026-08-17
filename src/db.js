@@ -1,0 +1,50 @@
+const Database = require("better-sqlite3");
+const db = new Database("database.db");
+db.pragma("foreign_keys = ON");
+
+db.exec(`
+CREATE TABLE IF NOT EXISTS users (
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+ name TEXT NOT NULL,
+ email TEXT NOT NULL UNIQUE,
+ password TEXT NOT NULL,
+ role TEXT NOT NULL DEFAULT 'admin',
+ created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS clients (
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+ name TEXT NOT NULL,
+ email TEXT,
+ phone TEXT,
+ created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS products (
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+ name TEXT NOT NULL,
+ type TEXT DEFAULT 'Producto',
+ price REAL NOT NULL DEFAULT 0,
+ stock INTEGER NOT NULL DEFAULT 0,
+ created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS sales (
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+ client_id INTEGER,
+ user_id INTEGER NOT NULL,
+ total REAL NOT NULL,
+ payment_method TEXT NOT NULL,
+ created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+ FOREIGN KEY(client_id) REFERENCES clients(id) ON DELETE SET NULL,
+ FOREIGN KEY(user_id) REFERENCES users(id)
+);
+CREATE TABLE IF NOT EXISTS sale_items (
+ id INTEGER PRIMARY KEY AUTOINCREMENT,
+ sale_id INTEGER NOT NULL,
+ product_id INTEGER NOT NULL,
+ quantity INTEGER NOT NULL,
+ price REAL NOT NULL,
+ FOREIGN KEY(sale_id) REFERENCES sales(id) ON DELETE CASCADE,
+ FOREIGN KEY(product_id) REFERENCES products(id)
+);
+`);
+
+module.exports = db;
